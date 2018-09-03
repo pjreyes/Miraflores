@@ -1,0 +1,71 @@
+<div class="well">
+<div ng-app="calendarDemoApp" ng-controller="CalendarCtrl">
+  <form ng-submit="addEvent(customer)">
+      <div style="width : 50%; margin :0 auto;">
+        <label>Fecha</label>
+        <input type="datetime-local" name="appointmentdate" min="2018-02-20 10:00" max="201-04-24 10:00" step="3600" ng-model="customer.fecha" />
+        <label>Nombre</label>
+        <input ng-model="customer.name" />
+        <label>Celular</label>
+        <input ng-model="customer.phone" />
+        <label>Email</label>
+        <input ng-model="customer.email" />
+        <label>Tratamiento</label>
+          <select ng-model="customer.tratamiento">
+            <option ng-repeat="tratamiento in tratements" ng-value="{{tratamiento}}">{{tratamiento.name}}
+          </select>
+         <input type="submit" value="Confirmar"/>
+        <!-- <button class="btn btn-success" ng-click="addEvent()">TEST</button> -->
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+<!--
+
+<md-dialog aria-label="Mango (Fruit)"  ng-cloak flex-lg="25" flex="50" flex-sm="100">
+  <form ng-submit="answer(customer)">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-content  layout="column" layout-align="start center">
+            <md-input-container>
+                <label>Nombre</label>
+                <input ng-model="customer.name" required/>
+            </md-input-container>
+            <md-input-container>
+                <label>Celular</label>
+                <input ng-model="customer.phone" required/>
+            </md-input-container>
+            <md-input-container>
+                <label>Email</label>
+                <input ng-model="customer.email" required/>
+            </md-input-container>
+            <md-input-container>
+                <label>Tratamiento</label>
+                <md-select ng-model="customer.tratamiento">
+                  <md-option ng-value="tratamiento" ng-repeat="tratamiento in tratements">{{ tratamiento }}</md-option>
+                </md-select>
+            </md-input-container>
+
+            <select>
+              <option>None</option>
+              <option ng-repeat="tratamiento in tratements">{{tratamiento}}</option>
+            </select>
+            <md-input-container layout-align="center center">
+            </md-input-container>
+        </md-content>
+        <md-dialog-actions layout="row" layout-align="center center">
+            <md-button type="submit" class="md-raised md-warn">Confirmar</md-button>
+        </md-dialog-actions>
+    </md-dialog-content>
+  </form>
+</md-dialog> -->

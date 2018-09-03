@@ -46,8 +46,23 @@ calendarDemoApp.controller('CalendarCtrl',
     };
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
-        $scope.alertMessage = (date.title + ' was clicked ');
+        $scope.alertMessage = (date + ' was clicked ');
+        $scope.openPopupCustom(date);
+
     };
+    $scope.openPopupCustom = (date) => {
+        $modal.open({
+            templateUrl: 'modal.html',
+            controller: 'CalendarCtrl',
+        });
+    }
+      $scope.ok = function () {
+        $modalInstance.close('ok');
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
     /* alert on Drop */
      $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
        $scope.alertMessage = ('Event Dropped to make dayDelta ' + delta);
@@ -112,6 +127,11 @@ calendarDemoApp.controller('CalendarCtrl',
           left: 'title',
           center: '',
           right: 'today prev,next'
+        },
+        selectable: true,
+        select: function(date, jsEvent, view) {
+            console.log(date.format('MM/DD/YYYY'))
+            $scope.alertOnEventClick(date.format('MM/DD/YYYY'), jsEvent, view);
         },
         eventClick: $scope.alertOnEventClick,
         eventDrop: $scope.alertOnDrop,

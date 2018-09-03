@@ -17,15 +17,7 @@ calendarDemoApp.controller('CalendarCtrl',
             className: 'gcal-event',           // an option!
             currentTimezone: 'America/Chicago' // an option!
     };
-    /* event source that contains custom events on the scope */
-    // $scope.events = [
-    //   {title: 'All Day Event',start: new Date(y, m, 1)},
-    //   {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-    //   {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-    //   {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-    //   {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-    //   {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-    // ];
+
     /* event source that calls a function on every view switch */
     $scope.eventsF = function (start, end, timezone, callback) {
       var s = new Date(start).getTime() / 1000;
@@ -46,14 +38,40 @@ calendarDemoApp.controller('CalendarCtrl',
     };
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
-        $scope.alertMessage = (date + ' was clicked ');
+        $scope.alertMessage = (date + ' was clicked '  );
         $scope.openPopupCustom(date);
 
     };
     $scope.openPopupCustom = (date) => {
-        $modal.open({
+      console.log("enter to openPopupCustom")
+      console.log(date._i)
+        $scope.modalInstance = $modal.open({
+          controller: function($scope,$modalInstance){
+              $scope.customer = {};
+              $scope.addEvent = function() {
+                //console.log($scope.customer)
+                console.log("List of scope")
+                 year=date._i[0]
+                 month=date._i[1]
+                 day=date._i[2]
+                 hour=date._i[3]
+                 min=date._i[4]
+                 //console.log(localDate)
+                //console.log(data.toLocaleString())
+
+                $scope.events.push({
+                  title: $scope.customer.tratamiento.name,
+                  start: new Date(year,month,day,hour,min),
+                  end: new Date(year,month,day,hour+1,min),
+                  className: ['openSesame']
+                });
+              };
+          },
+          //templateUrl: 'demo/customer.html',
+            scope: $scope,
+            clickOutsideToClose:true,
             templateUrl: 'modal.html',
-            controller: 'CalendarCtrl',
+            //controller: 'CalendarCtrl',
         });
     }
       $scope.ok = function () {
@@ -86,15 +104,7 @@ calendarDemoApp.controller('CalendarCtrl',
     };
     /* add custom event*/
     $scope.events=[];
-    // $scope.addEvent = function() {
-    //
-    //   $scope.events.push({
-    //     title: 'Open Sesame',
-    //     start: new Date(y, m, 28),
-    //     end: new Date(y, m, 29),
-    //     className: ['openSesame']
-    //   });
-    // };
+
     /* remove event */
     $scope.remove = function(index) {
       $scope.events.splice(index,1);
@@ -130,8 +140,8 @@ calendarDemoApp.controller('CalendarCtrl',
         },
         selectable: true,
         select: function(date, jsEvent, view) {
-            console.log(date.format('MM/DD/YYYY'))
-            $scope.alertOnEventClick(date.format('MM/DD/YYYY'), jsEvent, view);
+            //console.log(date.format('MM/DD/YYYY'))
+            $scope.alertOnEventClick(date, jsEvent, view);
         },
         eventClick: $scope.alertOnEventClick,
         eventDrop: $scope.alertOnDrop,
@@ -166,104 +176,6 @@ calendarDemoApp.controller('CalendarCtrl',
         name : 'Tratamiento Facial MicroDermo'
       }
     ];
-
-
-    $scope.openPopup = function(Value) {
-      //agregar datos del formulario
-      var vm = this;
-           if(Value=='Text'){
-            $scope.modalInstance = $modal.open({
-              controller: function($scope,$modalInstance){
-                  $scope.customer = {};
-                  $scope.addEvent = function() {
-                    //console.log($scope.customer)
-                    console.log("List of scope")
-                     year=new Date($scope.customer.fecha).getFullYear()
-                     month=new Date($scope.customer.fecha).getMonth()
-                     day=new Date($scope.customer.fecha).getDate()
-                     hour=new Date($scope.customer.fecha).getHours()
-                     min=new Date($scope.customer.fecha).getMinutes()
-                     //console.log(localDate)
-                    //console.log(data.toLocaleString())
-
-                    $scope.events.push({
-                      title: $scope.customer.tratamiento.name,
-                      start: new Date(year,month,day,hour,min),
-                      end: new Date(year,month,day,hour+1,min),
-                      className: ['openSesame']
-                    });
-                  };
-              },
-              templateUrl: 'demo/customer.html',
-              scope: $scope,
-              clickOutsideToClose:true,
-            })
-          };
-
-      }
-
-  //   $scope.showAdvanced = function() {
-  //     var vm = this;
-  //     console.log("VM")
-  //     console.log(vm)
-  //   //var useFullScreen = (this.$mdMedia('sm') || this.$mdMedia('xs'))  && this.customFullscreen;
-  //   this.$mdDialog.show({
-  //     controller: function($scope,$mdDialog){
-  //         $scope.customer = {};
-  //       $scope.answer = function(answer){
-  //           $mdDialog.hide(answer);
-  //       };
-  //     },
-  //     templateUrl: 'demo/customer.html',
-  //     locals :{
-  //       slot : slot
-  //     },
-  //     clickOutsideToClose:true,
-  //     fullscreen: useFullScreen
-  //   })
-  //   .then(function(answer) {
-  //       answer.date = answer.slot.date;
-  //       vm.save(answer);
-  //   });
-  //
-  // }
-    // showAdvanced(slot) {
-    //     var vm = this;
-    //   var useFullScreen = (this.$mdMedia('sm') || this.$mdMedia('xs'))  && this.customFullscreen;
-    //   this.$mdDialog.show({
-    //     controller: function($scope,$mdDialog,slot){
-    //         $scope.customer = {};
-    //         $scope.customer.slot = slot;
-    //         $scope.tratements = [
-    //     'Lipolaser',
-    //     'Depilacion Laser',
-    //     'Masaje',
-    //     'MicroBlading',
-    //     'Limpieza Facial Express',
-    //     'Limpieza Facial Profunda',
-    //     'Tratamiento Facial RadioFrecuencia',
-    //     'Tratamiento Facial MicroDermo'
-    //   ];
-    //   $scope.tratements.slot = slot;
-    //
-    //       $scope.answer = function(answer){
-    //           $mdDialog.hide(answer);
-    //       };
-    //     },
-    //     templateUrl: 'demo/customer.html',
-    //     locals : {
-    //         slot : slot
-    //     },
-    //     clickOutsideToClose:true,
-    //     fullscreen: useFullScreen
-    //   })
-    //   .then(function(answer) {
-    //       answer.date = answer.slot.date;
-    //       vm.save(answer);
-    //   });
-    //
-    // }
-
     /* event sources array*/
     $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
     $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];

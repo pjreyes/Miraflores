@@ -2,6 +2,11 @@
 .idea
 coverage
 node_modules/
-bower_components/
+bower_components/angular
+bower_components/angular-mocks
+bower_components/angular-ui-calendar
+bower_components/bootstrap-css
+bower_components/jquery
+bower_components/moment
 *.iml
 calendar.min.js

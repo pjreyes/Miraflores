@@ -13,7 +13,7 @@ calendarDemoApp.controller('CalendarCtrl',
     //$scope.changeTo = 'Hungarian';
     /* event source that pulls from google.com */
     $scope.eventSource = {
-            url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
+          //  url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
             className: 'gcal-event',           // an option!
             currentTimezone: 'America/Chicago' // an option!
     };
@@ -42,9 +42,13 @@ calendarDemoApp.controller('CalendarCtrl',
         $scope.openPopupCustom(date);
 
     };
+
     $scope.openPopupCustom = (date) => {
       console.log("enter to openPopupCustom")
       console.log(date._i)
+      console.log("tratements")
+      console.log($scope.tratamiento)
+
         $scope.modalInstance = $modal.open({
           controller: function($scope,$modalInstance){
               $scope.customer = {};
@@ -56,15 +60,29 @@ calendarDemoApp.controller('CalendarCtrl',
                  day=date._i[2]
                  hour=date._i[3]
                  min=date._i[4]
-                 //console.log(localDate)
-                //console.log(data.toLocaleString())
-
+                 termino = "-"
+                if($scope.customer.tratamiento){
+                  //logica de colores para las botoneras
+                  if(parseInt($scope.customer.tratamiento.duracion)<60){
+                     termino= new Date(year,month,day,hour,min+parseInt($scope.customer.tratamiento.duracion))
+                     console.log(termino)
+                  }else{
+                     termino= new Date(year,month,day,hour+1,min)
+                     console.log(termino)
+                  }
+                }else{
+                  console.log("ERROR")
+                }
                 $scope.events.push({
-                  title: $scope.customer.tratamiento.name,
+                  title: $scope.customer.name+"\t"+$scope.customer.tratamiento.name,
                   start: new Date(year,month,day,hour,min),
-                  end: new Date(year,month,day,hour+1,min),
-                  className: ['openSesame']
+                  end: termino,
+                  color: $scope.customer.tratamiento.color
                 });
+
+
+
+
               };
           },
           //templateUrl: 'demo/customer.html',
@@ -72,8 +90,11 @@ calendarDemoApp.controller('CalendarCtrl',
             clickOutsideToClose:true,
             templateUrl: 'modal.html',
             //controller: 'CalendarCtrl',
+
         });
+
     }
+
       $scope.ok = function () {
         $modalInstance.close('ok');
       };
@@ -124,6 +145,7 @@ calendarDemoApp.controller('CalendarCtrl',
     };
      /* Render Tooltip */
     $scope.eventRender = function( event, element, view ) {
+        console.log("eventRender")
         element.attr({'tooltip': event.title,
                       'tooltip-append-to-body': true});
         $compile(element)($scope);
@@ -152,30 +174,116 @@ calendarDemoApp.controller('CalendarCtrl',
 
     $scope.tratements = [
       {
-        name : 'Lipolaser'
+        name : 'Depilacion 60 MIN',
+        duracion: 60,
+        categoria: 'DEPILACIONES',
+        color:'#00FF00'
       },
       {
-        name : 'Depilacion Laser'
+        name : 'Depilacion 30 MIN',
+        duracion: 30,
+        categoria: 'DEPILACIONES',
+        color:'#00FF00'
       },
       {
-        name : 'Masaje'
+        name : 'Evaluacion Depilacion',
+        duracion: 15,
+        categoria: 'EVALUACIONES',
+        color:'#FF8000'
       },
       {
-        name :  'MicroBlading'
+        name : 'Evaluacion Corporal',
+        duracion : 15,
+        categoria : 'EVALUACIONES',
+        color:'#FF8000'
       },
       {
-        name : 'Limpieza Facial Express'
+        name : 'Evaluacion Facial',
+        duracion : 15,
+        categoria : 'EVALUACIONES',
+        color:'#FF8000'
       },
       {
-        name : 'Limpieza Facial Profunda'
+        name :  'Limpieza Facial Express',
+        duracion : 30,
+        categoria : 'TRATAMIENTO FACIAL',
+        color:'#2E64FE'
       },
       {
-        name : 'Tratamiento Facial RadioFrecuencia'
+        name : 'Limpieza Facial Profunda',
+        duracion : 60,
+        categoria : 'TRATAMIENTO FACIAL',
+        color:'#2E64FE'
       },
       {
-        name : 'Tratamiento Facial MicroDermo'
+        name : 'Hidrodermo SOFT',
+        duracion : 60,
+        categoria : 'TRATAMIENTO FACIAL',
+        color:'#2E64FE'
+      },
+      {
+        name : 'Hidrodermo FLEX',
+        duracion : 60,
+        categoria : 'TRATAMIENTO FACIAL',
+        color:'#2E64FE'
+      },
+      {
+        name : 'Hidrodermo FLEX + SOFT',
+        duracion : 60, //posiblemente 75
+        categoria : 'TRATAMIENTO FACIAL',
+        color:'#2E64FE'
+      },
+      {
+        name : 'Laser KLAPP',
+        duracion : 60,
+        categoria : 'TRATAMIENTO FACIAL',
+        color:'#2E64FE'
+      },
+      {
+        name : 'Full Reductor',
+        duracion : 60,
+        categoria : 'TRATAMIENTO CORPORAL',
+        color:'#FA58F4'
+      },
+      {
+        name : 'Ultra Reductor',
+        duracion : 60,
+        categoria : 'TRATAMIENTO CORPORAL',
+        color:'#FA58F4'
+      },
+      {
+        name : 'Plus Reductor',
+        duracion : 60,
+        categoria : 'TRATAMIENTO CORPORAL',
+        color:'#FA58F4'
+      },
+      {
+        name : 'Body Tono',
+        duracion : 60,
+        categoria : 'TRATAMIENTO CORPORAL',
+        color:'#FA58F4'
+      },
+      {
+        name : 'Fit Mantencion',
+        duracion : 60,
+        categoria : 'TRATAMIENTO CORPORAL',
+        color:'#FA58F4'
+      },
+      {
+        name : 'Masaje Terapeutico',
+        duracion : 60,
+        categoria : 'MASAJES',
+        color:'#610B0B'
+      },
+      {
+        name : 'MicroBlading',
+        duracion : 60,
+        categoria : 'BELLEZA',
+        color:'#610B0B'
       }
     ];
+
+
     /* event sources array*/
     $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
     $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];

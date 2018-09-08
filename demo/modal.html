@@ -12,10 +12,10 @@
         <input ng-model="customer.email" />
         <label>Tratamiento</label>
           <select ng-model="customer.tratamiento">
-            <option ng-repeat="tratamiento in tratements" ng-value="{{tratamiento}}">{{tratamiento.name}}
+            <option ng-repeat="tratamiento in tratements |orderBy : 'categoria'" ng-value="{{tratamiento}}">{{tratamiento.name }}
           </select>
-         <input type="submit" value="Confirmar"/>
-       <button class="btn btn-success" ng-click="addEvent()">TEST</button>
+         <input type="submit"  value="Confirmar"/>
+       <!-- <button class="btn btn-success" ng-click="addEvent()">TEST</button> -->
       </div>
     </div>
   </form>

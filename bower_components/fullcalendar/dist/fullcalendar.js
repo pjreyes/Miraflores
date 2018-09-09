@@ -13178,7 +13178,7 @@ fcViews.agenda = {
 	defaults: {
 		allDaySlot: true,
 		allDayText: 'all-day',
-		slotDuration: '00:30:00',
+		slotDuration: '00:15:00',
 		minTime: '09:00:00',
 		maxTime: '22:00:00',
 		slotEventOverlap: true // a bad name. confused with overlap/constraint system

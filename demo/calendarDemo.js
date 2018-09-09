@@ -38,9 +38,14 @@ calendarDemoApp.controller('CalendarCtrl',
     };
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
-        $scope.alertMessage = (date + ' was clicked '  );
-        $scope.openPopupCustom(date);
-
+        $scope.alertMessage = ((date.title) ? date.title +' Telefono : '+date.cliente.phone : null  );
+        console.log("DATE")
+        console.log(date)
+        if(!date.title){
+          $scope.openPopupCustom(date);
+        }else{
+          console.log("tiene datos")
+        }
     };
 
     $scope.openPopupCustom = (date) => {
@@ -77,10 +82,17 @@ calendarDemoApp.controller('CalendarCtrl',
                   title: $scope.customer.name+"\t"+$scope.customer.tratamiento.name,
                   start: new Date(year,month,day,hour,min),
                   end: termino,
-                  color: $scope.customer.tratamiento.color
+                  color: $scope.customer.tratamiento.color,
+                  cliente:{
+                            nombre : $scope.customer.name,
+                            phone : ($scope.customer.phone) ? $scope.customer.phone :"Sin Telefono",
+                            email : ($scope.customer.email) ? $scope.customer.email :"Sin Email",
+                            tratamiento : $scope.customer.tratamiento.name,
+                            duracion : $scope.customer.tratamiento.duracion
+                            }
                 });
 
-
+                $modalInstance.close('ok');
 
 
               };

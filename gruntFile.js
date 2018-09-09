@@ -82,7 +82,7 @@ module.exports = function (grunt) {
                     open : true,
                     debug : true,
                     keepalive : true,
-                    hostname : '*',
+                    hostname : '192.168.1.91',
                     base : ['demo', '.']
                 }
             }
